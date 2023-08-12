@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Email;
 public class CreateUserDto {
     String _id;
 
-    @Email
+    @Email(message = "invalid email")
     String email;
 
     String password;

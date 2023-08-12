@@ -4,6 +4,7 @@ import com.jakobniinja.dtos.CreateUserDto;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
@@ -20,16 +21,16 @@ public class UsersController {
 
     @POST
     @Path("signup")
-    public List<CreateUserDto> createUser(CreateUserDto createUserDto) {
+    public List<CreateUserDto> createUser(@Valid CreateUserDto createUserDto) {
 
-        userService.add(createUserDto);
+        userService.create(createUserDto.getEmail(), createUserDto.getPassword());
 
-        return userService.list();
+        return userService.find();
     }
 
     @GET
     public List<CreateUserDto> getAll() {
-        return userService.list();
+        return userService.find();
     }
 
 

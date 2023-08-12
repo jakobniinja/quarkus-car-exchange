@@ -12,7 +12,9 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.gt;
@@ -25,43 +27,86 @@ public class UserService {
     @Inject
     MongoClient mongoClient;
 
-    public List<CreateUserDto> list() {
+    public List<CreateUserDto> find(String email) {
         List<CreateUserDto> list = new ArrayList<>();
 
         try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
             while (cursor.hasNext()) {
                 Document document = cursor.next();
 
-                CreateUserDto createUserDto = new CreateUserDto();
-                createUserDto.set_id(document.getString("_id"));
-                createUserDto.setEmail(document.getString("email"));
-                createUserDto.setPassword(document.getString("password"));
-                list.add(createUserDto);
+
+                CreateUserDto userDto = new CreateUserDto();
+                userDto.set_id(document.getString("_id"));
+                userDto.setEmail(document.getString("email"));
+                userDto.setPassword(document.getString("password"));
+
+                if (email.equalsIgnoreCase(userDto.getEmail())) {
+                    list.add(userDto);
+                }
             }
         }
         return list;
     }
 
 
-    public void add(CreateUserDto createUserDto) {
+    public void create(String email, String password) {
 
         counter.increment();
 
         Document document = new Document()
-                .append("_id", createUserDto.get_id())
-                .append("email", createUserDto.getEmail())
-                .append("password", createUserDto.getPassword());
+                .append("_id", String.valueOf(counter.getVal()))
+                .append("email", email)
+                .append("password", password);
 
         getCollection().insertOne(document);
     }
 
 
-    public void delete(String id) {
+    public CreateUserDto findOne(String _id) {
 
-        Bson query = eq("_id", id);
-        DeleteResult result = getCollection().deleteOne(query);
+        try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
+            while (cursor.hasNext()) {
+                Document document = new Document();
+
+                if (_id.equalsIgnoreCase(document.getString("_id"))) {
+                    CreateUserDto userDto = new CreateUserDto();
+                    userDto.set_id(document.getString("_id"));
+                    userDto.setEmail(document.getString("email"));
+                    userDto.setPassword(document.getString("password"));
+                    return userDto;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<CreateUserDto> find() {
+        List<CreateUserDto> list = new ArrayList<>();
+
+        try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
+            while (cursor.hasNext()) {
+                Document document = new Document();
+                CreateUserDto userDto = new CreateUserDto();
+                userDto.set_id(document.getString("_id"));
+                userDto.setEmail(document.getString("email"));
+                userDto.setPassword(document.getString("password"));
+
+                list.add(userDto);
+            }
+
+        }
+        return list;
 
     }
+
+    public void update() {
+
+    }
+
+    public void remove() {
+
+    }
+
 
     public void deleteAll() {
 
