@@ -1,6 +1,6 @@
 package com.jakobniinja.controllers;
 
-import com.jakobniinja.dtos.CreateUserDto;
+import com.jakobniinja.dtos.User;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,22 +21,29 @@ public class UsersController {
 
     @POST
     @Path("signup")
-    public List<CreateUserDto> createUser(@Valid CreateUserDto createUserDto) {
+    public List<User> createUser(@Valid User user) {
 
-        userService.create(createUserDto.getEmail(), createUserDto.getPassword());
+        userService.create(user);
 
         return userService.find();
     }
 
+
     @GET
-    public List<CreateUserDto> getAll() {
+    @Path("{id}")
+    public User findUser(@PathParam("id") String id) {
+        return userService.findOne(id);
+    }
+
+    @GET
+    public List<User> getAll() {
         return userService.find();
     }
 
 
     @DELETE
     @Path("delete")
-    public List<CreateUserDto> removeAll() {
+    public List<User> removeAll() {
         userService.deleteAll();
 
         return getAll();

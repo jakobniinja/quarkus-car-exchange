@@ -1,6 +1,6 @@
 package com.jakobniinja.controllers;
 
-import com.jakobniinja.dtos.CreateUserDto;
+import com.jakobniinja.dtos.User;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -18,20 +18,14 @@ import static org.hamcrest.Matchers.*;
 @QuarkusTest
 public class UsersResourceTest {
 
-
     @AfterEach
     void tearDown() {
         given().contentType(ContentType.JSON).when().delete("/auth/delete").then().statusCode(200);
-
     }
 
     @Test
     void testGetUser() {
-        Response response = given().when().get("/auth")
-                .then().statusCode(200).extract().response();
-
-
-        List<CreateUserDto> users = response.jsonPath().getList("$");
+        Response response = given().when().get("/auth").then().statusCode(200).extract().response();
 
         assertThat(response.jsonPath().getList("list").size(), is(greaterThanOrEqualTo(0)));
 
@@ -39,18 +33,19 @@ public class UsersResourceTest {
 
     @Test
     void testCreateUser() {
-        Map<String, String> userDto = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        userDto.put("_id", "112343");
-        userDto.put("email", "jakob@hotmail.com");
-        userDto.put("password", "password");
+        map.put("_id", "333");
+        map.put("email", "apple@outlook.com");
+        map.put("password", "small-apple");
 
 
-        given().contentType(ContentType.JSON)
-                .body(userDto)
-                .when().post("/auth/signup")
-                .then().statusCode(200)
-                .body("email", hasItem("jakob@hotmail.com")).extract().response();
+        Response response = given().contentType(ContentType.JSON).body(map).when().post("/auth/signup").then()
+                .statusCode(200).body(containsString("apple")).extract().response();
+
+        List<User> users = response.jsonPath().getList("$");
+
+        assertThat(users, not(empty()));
 
     }
 }

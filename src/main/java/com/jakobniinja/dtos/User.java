@@ -3,16 +3,13 @@ package com.jakobniinja.dtos;
 
 import jakarta.validation.constraints.Email;
 
-public class CreateUserDto {
+public class User {
     String _id;
-
     @Email(message = "invalid email")
     String email;
-
     String password;
 
-
-    public CreateUserDto() {
+    public User() {
         //
     }
 
