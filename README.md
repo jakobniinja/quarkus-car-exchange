@@ -8,6 +8,8 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 11/08 Resolved issue where intellij picked java 17 - https://code.quarkus.io/
 TODO: Start validating for valid emails
 
+12/08 Validation now impl, find and findOne impl but not tested ;)
+
 ``
 
 # quarkus-car-exchange
