@@ -9,7 +9,7 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 TODO: Start validating for valid emails
 
 12/08 Validation now impl, find and findOne needs testing ;)
-
+12/08 Reusing the user entity and fixed oom and other miss
 ``
 
 # quarkus-car-exchange
