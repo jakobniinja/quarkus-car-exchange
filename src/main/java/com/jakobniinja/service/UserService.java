@@ -46,7 +46,7 @@ public class UserService {
         List<User> users = find();
 
         for (User u : users) {
-            if (u.get_id().equalsIgnoreCase(_id)) {
+            if (_id.equalsIgnoreCase(u.get_id())) {
                 return u;
             }
 

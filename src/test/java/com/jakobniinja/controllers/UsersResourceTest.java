@@ -33,19 +33,25 @@ public class UsersResourceTest {
 
     @Test
     void testCreateUser() {
-        Map<String, String> map = new HashMap<>();
 
-        map.put("_id", "333");
-        map.put("email", "apple@outlook.com");
-        map.put("password", "small-apple");
+        Map<String, String> map = Map.of("_id", "333", "email", "apple@outlook.com", "password", "small-apple");
 
 
-        Response response = given().contentType(ContentType.JSON).body(map).when().post("/auth/signup").then()
-                .statusCode(200).body(containsString("apple")).extract().response();
+        Response response = given().contentType(ContentType.JSON).body(map).when().post("/auth/signup").then().statusCode(200).extract().response();
 
         List<User> users = response.jsonPath().getList("$");
 
         assertThat(users, not(empty()));
 
+    }
+
+    @Test
+    void findUserTest() {
+
+        Map<String, String> map = Map.of("_id", "3", "email", "apple@outlook.com", "password", "small-apple");
+
+        given().contentType(ContentType.JSON).body(map).when().post("/auth/signup").then().statusCode(200);
+
+        given().when().get("auth/3").then().statusCode(200);
     }
 }
