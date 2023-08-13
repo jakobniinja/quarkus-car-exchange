@@ -25,7 +25,7 @@ public class UsersController {
 
         userService.create(user);
 
-        return userService.find();
+        return userService.find(user.getEmail());
     }
 
 
@@ -36,6 +36,12 @@ public class UsersController {
     }
 
     @GET
+    public List<User> findAllUsers(@QueryParam("email") String email) {
+        return userService.find(email);
+    }
+
+    @GET
+    @Path("/all")
     public List<User> getAll() {
         return userService.find();
     }

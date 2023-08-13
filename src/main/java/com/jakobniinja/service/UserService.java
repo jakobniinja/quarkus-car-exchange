@@ -33,9 +33,27 @@ public class UserService {
                 userDto.set_id(document.getString("_id"));
                 userDto.setEmail(document.getString("email"));
                 userDto.setPassword(document.getString("password"));
-
                 list.add(userDto);
+            }
+        }
+        return list;
+    }
 
+    public List<User> find(String email) {
+        List<User> list = new ArrayList<>();
+
+        try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
+            while (cursor.hasNext()) {
+                Document document = cursor.next();
+
+                User userDto = new User();
+                userDto.set_id(document.getString("_id"));
+                userDto.setEmail(document.getString("email"));
+                userDto.setPassword(document.getString("password"));
+
+                if (email.equalsIgnoreCase(userDto.getEmail())) {
+                    list.add(userDto);
+                }
             }
         }
         return list;

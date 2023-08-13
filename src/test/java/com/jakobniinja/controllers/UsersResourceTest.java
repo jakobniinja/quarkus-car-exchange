@@ -25,7 +25,7 @@ public class UsersResourceTest {
 
     @Test
     void testGetUser() {
-        Response response = given().when().get("/auth").then().statusCode(200).extract().response();
+        Response response = given().when().get("/auth/all").then().statusCode(200).extract().response();
 
         assertThat(response.jsonPath().getList("list").size(), is(greaterThanOrEqualTo(0)));
 
@@ -53,5 +53,11 @@ public class UsersResourceTest {
         given().contentType(ContentType.JSON).body(map).when().post("/auth/signup").then().statusCode(200);
 
         given().when().get("auth/3").then().statusCode(200);
+    }
+
+
+    @Test
+    void findAllUsersTest(){
+        given().when().get("auth?email=1@outlook.com").then().statusCode(200);
     }
 }
