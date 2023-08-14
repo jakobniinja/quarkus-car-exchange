@@ -12,7 +12,7 @@ TODO: Start validating for valid emails
 12/08 Reusing the user entity and fixed oom and other miss
 
 13/08 learned about quaryParam and preoccupied routes
-13/08 hi
+14/08 Added plenty of tests and got time to play with update ;)
 ``
 
 # quarkus-car-exchange
