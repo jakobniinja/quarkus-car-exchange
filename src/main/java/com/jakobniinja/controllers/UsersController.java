@@ -1,5 +1,6 @@
 package com.jakobniinja.controllers;
 
+import com.jakobniinja.dtos.UpdateUser;
 import com.jakobniinja.dtos.User;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -33,6 +34,24 @@ public class UsersController {
     @Path("{id}")
     public User findUser(@PathParam("id") String id) {
         return userService.findOne(id);
+    }
+
+
+    @DELETE
+    @Path("delete/{id}")
+
+    public List<User> removeUser(@PathParam("id") String id) throws Exception {
+        userService.remove(id);
+
+        return getAll();
+    }
+
+    @PATCH
+    @Path("{id}")
+    public List<User> updateUser(@PathParam("id") String id, UpdateUser user) throws Exception {
+        userService.update(id, user);
+
+        return userService.find(id);
     }
 
     @GET

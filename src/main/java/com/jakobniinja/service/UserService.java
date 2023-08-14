@@ -1,10 +1,13 @@
 package com.jakobniinja.service;
 
+import com.jakobniinja.dtos.UpdateUser;
 import com.jakobniinja.dtos.User;
 import com.jakobniinja.utils.Counter;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -84,18 +87,15 @@ public class UserService {
     }
 
 
-    public User update(User userDto) throws Exception {
-        User user = findOne(userDto.get_id());
+    public User update(String id, UpdateUser updateUser) throws Exception {
+        User user = findOne(id);
 
         if (user == null) {
             throw new Exception("user not found!");
         }
 
-        Optional.ofNullable(userDto.get_id()).ifPresent(user::set_id);
-        Optional.ofNullable(userDto.getEmail()).ifPresent(user::setEmail);
-        Optional.ofNullable(userDto.getPassword()).ifPresent(user::setPassword);
-
-        return user;
+        getCollection().updateOne(Filters.eq("_id", user.get_id()), Updates.set("password", updateUser.getPassword()));
+        return findOne(id);
 
     }
 
