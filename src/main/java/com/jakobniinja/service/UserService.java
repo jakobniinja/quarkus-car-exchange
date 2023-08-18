@@ -94,7 +94,32 @@ public class UserService {
             throw new Exception("user not found!");
         }
 
-        getCollection().updateOne(Filters.eq("_id", user.get_id()), Updates.set("password", updateUser.getPassword()));
+        if (user.getPassword().equalsIgnoreCase(updateUser.getPassword())) {
+
+            getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
+
+        }
+
+        if (user.getEmail().equalsIgnoreCase(updateUser.getEmail())) {
+            getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
+
+        }
+
+        if (!user.getEmail().equalsIgnoreCase(updateUser.getEmail())) {
+            if (updateUser.getPassword() == null) {
+                getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
+
+            }
+        }
+
+        if (!user.getPassword().equalsIgnoreCase(updateUser.getPassword())) {
+
+            if (updateUser.getEmail() == null) {
+                getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
+
+            }
+        }
+
         return findOne(id);
 
     }
