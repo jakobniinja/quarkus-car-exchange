@@ -94,31 +94,17 @@ public class UserService {
             throw new Exception("user not found!");
         }
 
-        if (user.getPassword().equalsIgnoreCase(updateUser.getPassword())) {
+        getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
+        getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
 
-            getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
-
+        if (updateUser.getPassword() == null && user.getEmail() != null){
+            getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", user.getPassword()));
         }
 
-        if (user.getEmail().equalsIgnoreCase(updateUser.getEmail())) {
-            getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
-
+        if (updateUser.getEmail() == null && user.getPassword() != null){
+            getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", user.getEmail()));
         }
 
-        if (!user.getEmail().equalsIgnoreCase(updateUser.getEmail())) {
-            if (updateUser.getPassword() == null) {
-                getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
-
-            }
-        }
-
-        if (!user.getPassword().equalsIgnoreCase(updateUser.getPassword())) {
-
-            if (updateUser.getEmail() == null) {
-                getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
-
-            }
-        }
 
         return findOne(id);
 

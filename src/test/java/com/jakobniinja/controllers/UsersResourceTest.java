@@ -56,12 +56,12 @@ public class UsersResourceTest {
 
 
     @Test
-    void findAllUsersTest(){
+    void findAllUsersTest() {
         given().when().get("auth?email=1@outlook.com").then().statusCode(200);
     }
 
     @Test
-    void removeUserTest(){
+    void removeUserTest() {
         Map<String, String> user = Map.of("_id", "122", "email", "android@samsung.com", "password", "Galaxy s30");
 
         given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
@@ -70,12 +70,71 @@ public class UsersResourceTest {
     }
 
     @Test
-    void updateUserTest(){
-        Map<String, String> user = Map.of("_id", "5", "email", "android@samsung.com", "password", "Galaxy s30");
-        Map<String, String> updatedUser = Map.of("email", "jakob@y.com", "password", "hard password");
+    void updatePasswordTest() {
+        Map<String, String> user = Map.of("_id", "312", "email", "hej@test.com", "password", "hj");
+
+        Map<String, String> updatedUser = Map.of("_id", "312", "email", "hej@test.com", "password", "hej");
 
         given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
-        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/5").then().statusCode(200);
 
+        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/312").then().statusCode(200);
+
+        given().get("auth/all").then().statusCode(200).body("email", hasItem("hej@test.com")).body("password", hasItem("hej"));
+    }
+
+    @Test
+    void updateEmailTest() {
+        Map<String, String> user = Map.of("_id", "312", "email", "hej@test.com", "password", "hj");
+
+        Map<String, String> updatedUser = Map.of("_id", "312", "email", "hej@hej.com", "password", "hj");
+
+        given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/312").then().statusCode(200);
+
+
+        given().get("auth/all").then().statusCode(200).body("email", hasItem("hej@hej.com")).body("password", hasItem("hj"));
+
+
+    }
+
+    @Test
+    void updateEmailNoPassword() {
+        Map<String, String> user = Map.of("_id", "312", "email", "hej@hej.com", "password", "hej");
+
+        Map<String, String> updatedUser = Map.of("_id", "312", "email", "2@hej.com");
+
+        given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/312").then().statusCode(200);
+
+        given().get("auth/all").then().statusCode(200).body("email", hasItem("2@hej.com")).body("password", hasItem("hej"));
+    }
+
+    @Test
+    void updatePasswordNoEmail() {
+        Map<String, String> user = Map.of("_id", "312", "email", "2@hej.com", "password", "hej");
+
+        Map<String, String> updatedUser = Map.of("_id", "312", "password", "not so strong password");
+
+        given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/312").then().statusCode(200);
+
+        given().get("auth/all").then().statusCode(200).body("email", hasItem("2@hej.com")).body("password", hasItem("not so strong password"));
+    }
+
+
+    @Test
+    void updateJustId() {
+        Map<String, String> user = Map.of("_id", "312", "email", "2@hej.com", "password", "hej");
+
+        Map<String, String> updatedUser = Map.of("_id", "312" );
+
+        given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(MediaType.APPLICATION_JSON).body(updatedUser).patch("auth/312").then().statusCode(200);
+
+        given().get("auth/all").then().statusCode(200).body("email", hasItem("2@hej.com")).body("password", hasItem("hej"));
     }
 }
