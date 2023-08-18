@@ -13,6 +13,8 @@ TODO: Start validating for valid emails
 
 13/08 learned about quaryParam and preoccupied routes
 14/08 Added plenty of tests and got time to play with update ;)
+
+18/8 patch now working, not to happy with the readabilitty tho
 ``
 
 # quarkus-car-exchange
