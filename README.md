@@ -15,6 +15,7 @@ TODO: Start validating for valid emails
 14/08 Added plenty of tests and got time to play with update ;)
 
 18/8 patch now working, not to happy with the readabilitty tho
+18/8 clean code and some what simpler code + test coverage
 ``
 
 # quarkus-car-exchange
