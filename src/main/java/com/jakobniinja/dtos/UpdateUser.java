@@ -1,11 +1,13 @@
 package com.jakobniinja.dtos;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Email;
 
 public class UpdateUser {
 
     @Email
     String email;
+    @JsonbTransient
     String password;
 
 

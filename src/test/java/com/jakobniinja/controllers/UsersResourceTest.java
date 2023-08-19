@@ -3,6 +3,7 @@ package com.jakobniinja.controllers;
 import com.jakobniinja.dtos.User;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.AfterEach;
