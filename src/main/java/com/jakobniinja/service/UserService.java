@@ -2,7 +2,6 @@ package com.jakobniinja.service;
 
 import com.jakobniinja.dtos.UpdateUser;
 import com.jakobniinja.dtos.User;
-import com.jakobniinja.utils.Counter;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -11,10 +10,12 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.gt;
@@ -91,7 +92,7 @@ public class UserService {
         User user = findOne(id);
 
         if (user == null) {
-            throw new Exception("user not found!");
+            throw new NotFoundException("user not found!");
         }
 
         getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
@@ -114,7 +115,7 @@ public class UserService {
         User user = findOne(_id);
 
         if (user == null) {
-            throw new Exception("user does not exist!");
+            throw new NotFoundException("user not found!");
         }
 
         Bson query = eq("_id", _id);

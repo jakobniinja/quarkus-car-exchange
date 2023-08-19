@@ -33,7 +33,12 @@ public class UsersController {
     @GET
     @Path("{id}")
     public User findUser(@PathParam("id") String id) {
-        return userService.findOne(id);
+        User user = userService.findOne(id);
+
+        if (user == null) {
+            throw new NotFoundException("user not found!");
+        }
+        return user;
     }
 
 

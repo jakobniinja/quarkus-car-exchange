@@ -137,4 +137,20 @@ public class UsersResourceTest {
 
         given().get("auth/all").then().statusCode(200).body("email", hasItem("2@hej.com")).body("password", hasItem("hej"));
     }
+
+    @Test
+    void findOneTestNotFound(){
+        given().when().get("auth/122").then().statusCode(404);
+    }
+
+    @Test
+    void deleteNotExists(){
+        given().when().delete("auth/delete/122").then().statusCode(404);
+    }
+
+    @Test
+    void updateNotFound() {
+        Map<String, String> user = Map.of("_id", "122", "email", "2@hej.com", "password", "hej");
+        given().contentType(ContentType.JSON).body(user).when().patch("auth/122").then().statusCode(404);
+    }
 }
