@@ -18,5 +18,3 @@ TODO: Start validating for valid emails
 18/8 clean code and some what simpler code + test coverage
 19/8 added JsonbTransient, learning custom interceptors with dtos
 ``
-
-# quarkus-car-exchange
