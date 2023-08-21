@@ -19,4 +19,5 @@ TODO: Start validating for valid emails
 19/8 added JsonbTransient, learning custom interceptors with dtos
 
 21/8 had some regex problems, working on Interceptors and it's lifecycle methods
+21/8 interceptors and tricky, but i will find a way ;)
 ``
