@@ -1,15 +1,12 @@
 package com.jakobniinja.dtos;
 
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Email;
 
 public class User {
     String _id;
     @Email(message = "invalid email")
     String email;
-
-    @JsonbTransient()
     String password;
 
     public User() {

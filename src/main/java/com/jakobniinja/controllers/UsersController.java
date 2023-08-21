@@ -44,7 +44,6 @@ public class UsersController {
 
     @DELETE
     @Path("delete/{id}")
-
     public List<User> removeUser(@PathParam("id") String id) throws Exception {
         userService.remove(id);
 
