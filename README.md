@@ -17,4 +17,6 @@ TODO: Start validating for valid emails
 18/8 patch now working, not to happy with the readabilitty tho
 18/8 clean code and some what simpler code + test coverage
 19/8 added JsonbTransient, learning custom interceptors with dtos
+
+21/8 had some regex problems, working on Interceptors and it's lifecycle methods
 ``
