@@ -98,11 +98,11 @@ public class UserService {
         getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", updateUser.getEmail()));
         getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", updateUser.getPassword()));
 
-        if (updateUser.getPassword() == null && user.getEmail() != null){
+        if (updateUser.getPassword() == null && user.getEmail() != null) {
             getCollection().updateOne(Filters.eq("_id", id), Updates.set("password", user.getPassword()));
         }
 
-        if (updateUser.getEmail() == null && user.getPassword() != null){
+        if (updateUser.getEmail() == null && user.getPassword() != null) {
             getCollection().updateOne(Filters.eq("_id", id), Updates.set("email", user.getEmail()));
         }
 

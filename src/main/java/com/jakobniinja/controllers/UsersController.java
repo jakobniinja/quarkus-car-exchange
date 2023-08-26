@@ -2,6 +2,7 @@ package com.jakobniinja.controllers;
 
 import com.jakobniinja.dtos.UpdateUser;
 import com.jakobniinja.dtos.User;
+import com.jakobniinja.service.AuthService;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,11 +21,14 @@ public class UsersController {
     @Inject
     UserService userService;
 
+    @Inject
+    AuthService authService;
+
     @POST
     @Path("signup")
     public List<User> createUser(@Valid User user) {
 
-        userService.create(user);
+        authService.signUp(user);
 
         return userService.find(user.getEmail());
     }

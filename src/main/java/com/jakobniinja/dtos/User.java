@@ -1,6 +1,7 @@
 package com.jakobniinja.dtos;
 
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Email;
 
 public class User {
@@ -29,6 +30,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonbTransient
     public String getPassword() {
         return password;
     }
