@@ -20,4 +20,6 @@ TODO: Start validating for valid emails
 
 21/8 had some regex problems, working on Interceptors and it's lifecycle methods
 21/8 interceptors and tricky, but i will find a way ;)
+
+26/8 Turns out we don't need to interceptors, JsonbTransient on the getter of the DTO did the trick
 ``
