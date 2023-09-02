@@ -23,4 +23,6 @@ TODO: Start validating for valid emails
 
 26/8 Turns out we don't need to interceptors, JsonbTransient on the getter of the DTO did the trick
 26/8 Added hashing with SCrypt for passwords, not hexa tho :/
+
+2/09 impl minimalistic signin and learned to read java docs scrypt
 ``
