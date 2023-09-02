@@ -33,6 +33,12 @@ public class UsersController {
         return userService.find(user.getEmail());
     }
 
+    @POST
+    @Path("signin")
+    public void signIn(@Valid User user) {
+        authService.signIn(user);
+    }
+
 
     @GET
     @Path("{id}")

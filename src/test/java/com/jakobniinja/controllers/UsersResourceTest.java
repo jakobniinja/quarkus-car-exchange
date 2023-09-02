@@ -129,7 +129,7 @@ public class UsersResourceTest {
     void updateJustId() {
         Map<String, String> user = Map.of("_id", "312", "email", "2@hej.com", "password", "hej");
 
-        Map<String, String> updatedUser = Map.of("_id", "312" );
+        Map<String, String> updatedUser = Map.of("_id", "312");
 
         given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
 
@@ -139,12 +139,12 @@ public class UsersResourceTest {
     }
 
     @Test
-    void findOneTestNotFound(){
+    void findOneTestNotFound() {
         given().when().get("auth/122").then().statusCode(404);
     }
 
     @Test
-    void deleteNotExists(){
+    void deleteNotExists() {
         given().when().delete("auth/delete/122").then().statusCode(404);
     }
 
@@ -152,5 +152,39 @@ public class UsersResourceTest {
     void updateNotFound() {
         Map<String, String> user = Map.of("_id", "122", "email", "2@hej.com", "password", "hej");
         given().contentType(ContentType.JSON).body(user).when().patch("auth/122").then().statusCode(404);
+    }
+
+
+    @Test
+    void signInTest() {
+
+        Map<String, String> user = Map.of("_id", "999", "email", "jakob@telia.com", "password", "password");
+
+        given().contentType(MediaType.APPLICATION_JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(ContentType.JSON).body(user).post("auth/signin").then().statusCode(204);
+
+    }
+
+
+    @Test
+    void signInEmailNotFoundTest() {
+
+        Map<String, String> user = Map.of("_id", "999", "email", "jakob@telia.com", "password", "password");
+
+        given().contentType(ContentType.JSON).body(user).post("auth/signin").then().statusCode(404);
+
+    }
+
+    @Test
+    void signInWithBadPassword(){
+
+        Map<String, String> user = Map.of("_id", "999", "email", "jakob2@telia.com", "password", "password");
+
+        Map<String, String> loginAttempt = Map.of("_id", "999", "email", "jakob2@telia.com", "password", "cat");
+
+        given().contentType(ContentType.JSON).body(user).post("auth/signup").then().statusCode(200);
+
+        given().contentType(ContentType.JSON).body(loginAttempt).post("auth/signin").then().statusCode(400);
     }
 }
