@@ -6,8 +6,10 @@ import com.jakobniinja.service.AuthService;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
@@ -23,6 +25,20 @@ public class UsersController {
 
     @Inject
     AuthService authService;
+
+
+    @GET
+    @Path("color/{color}")
+    public Object  setColors(@PathParam("color") String color) {
+        return "you choose the color: " + color;
+    }
+
+    @GET
+    @Path("colors")
+    public Object getColor(@Context HttpServletRequest request) {
+        return request.getAttribute("color");
+    }
+
 
     @POST
     @Path("signup")

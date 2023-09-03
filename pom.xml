@@ -64,6 +64,11 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0-RC1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
