@@ -25,4 +25,5 @@ TODO: Start validating for valid emails
 26/8 Added hashing with SCrypt for passwords, not hexa tho :/
 
 2/09 impl minimalistic signin and learned to read java docs scrypt
+3/09 trying to figure out @Context HttpServletRequest - 400 bad request
 ``

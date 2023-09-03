@@ -12,6 +12,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 @Path("auth")
