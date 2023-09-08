@@ -26,4 +26,6 @@ TODO: Start validating for valid emails
 
 2/09 impl minimalistic signin and learned to read java docs scrypt
 3/09 trying to figure out @Context HttpServletRequest - 400 bad request
+
+8/09 simple variant of the cookie session library
 ``
