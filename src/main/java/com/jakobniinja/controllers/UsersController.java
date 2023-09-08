@@ -6,13 +6,12 @@ import com.jakobniinja.service.AuthService;
 import com.jakobniinja.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
-import java.net.http.HttpRequest;
+import java.net.HttpCookie;
+import java.util.Base64;
 import java.util.List;
 
 @Path("auth")
@@ -20,7 +19,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class UsersController {
-
+    HttpCookie httpCookie = new HttpCookie("Set-Cookie", "");
     @Inject
     UserService userService;
 
@@ -30,14 +29,15 @@ public class UsersController {
 
     @GET
     @Path("color/{color}")
-    public Object  setColors(@PathParam("color") String color) {
-        return "you choose the color: " + color;
+    public Object setColors(@PathParam("color") String color) {
+        httpCookie.setValue(color);
+        return "ey" + Base64.getEncoder().encodeToString(color.getBytes());
     }
 
     @GET
     @Path("colors")
-    public Object getColor(@Context HttpServletRequest request) {
-        return request.getAttribute("color");
+    public String getColor() {
+        return httpCookie.getValue();
     }
 
 
