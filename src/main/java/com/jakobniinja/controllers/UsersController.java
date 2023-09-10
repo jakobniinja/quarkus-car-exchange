@@ -11,7 +11,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.net.HttpCookie;
-import java.util.Base64;
 import java.util.List;
 
 @Path("auth")
@@ -19,41 +18,40 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class UsersController {
-    HttpCookie httpCookie = new HttpCookie("Set-Cookie", "");
+    private static final HttpCookie httpCookie = new HttpCookie("Set-Cookie", "");
     @Inject
     UserService userService;
-
     @Inject
     AuthService authService;
 
-
-    @GET
-    @Path("color/{color}")
-    public Object setColors(@PathParam("color") String color) {
-        httpCookie.setValue(color);
-        return "ey" + Base64.getEncoder().encodeToString(color.getBytes());
-    }
-
-    @GET
-    @Path("colors")
-    public String getColor() {
+    public String getCurrentUserId() {
         return httpCookie.getValue();
     }
 
+    @GET
+    @Path("whoami")
+    public User whoAmI() {
+        return userService.findOne(httpCookie.getValue());
+    }
+
+    @POST
+    @Path("signout")
+    public void signOut() {
+        httpCookie.setValue("");
+    }
 
     @POST
     @Path("signup")
     public List<User> createUser(@Valid User user) {
-
         authService.signUp(user);
-
         return userService.find(user.getEmail());
     }
 
     @POST
     @Path("signin")
-    public void signIn(@Valid User user) {
-        authService.signIn(user);
+    public String signIn(@Valid User user) {
+        authService.signIn(user, httpCookie);
+        return getCurrentUserId();
     }
 
 
@@ -73,7 +71,6 @@ public class UsersController {
     @Path("delete/{id}")
     public List<User> removeUser(@PathParam("id") String id) throws Exception {
         userService.remove(id);
-
         return getAll();
     }
 
@@ -81,7 +78,6 @@ public class UsersController {
     @Path("{id}")
     public List<User> updateUser(@PathParam("id") String id, UpdateUser user) throws Exception {
         userService.update(id, user);
-
         return userService.find(id);
     }
 
@@ -101,7 +97,6 @@ public class UsersController {
     @Path("delete")
     public List<User> removeAll() {
         userService.deleteAll();
-
         return getAll();
     }
 }

@@ -187,16 +187,4 @@ public class UsersResourceTest {
 
         given().contentType(ContentType.JSON).body(loginAttempt).post("auth/signin").then().statusCode(400);
     }
-
-    @Test
-    void setColorTest(){
-        given().get("auth/color/blue").then().statusCode(200).body(containsString("ey"));
-    }
-
-
-    @Test
-    void getColorTest(){
-        given().get("auth/color/purple").then().statusCode(200).body(containsString("ey"));
-        given().get("auth/colors").then().statusCode(200).body(containsString("purple"));
-    }
 }

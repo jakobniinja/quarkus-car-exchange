@@ -1,0 +1,21 @@
+GET http://localhost:8081/auth/whoami
+
+###
+POST http://localhost:8081/auth/signup
+Content-Type: application/json
+
+{
+  "_id": "110",
+  "email": "hejj@hejj.se",
+  "password": "hej"
+}
+
+###
+POST http://localhost:8081/auth/signin
+Content-Type: application/json
+
+{
+  "_id": "110",
+  "email": "hejj@hejj.se",
+"password": "hej"
+}
